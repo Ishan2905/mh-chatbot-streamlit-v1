@@ -136,7 +136,7 @@ def main():
             "Your message:",
             key=f"user_input_{st.session_state.user_input_key}",
             height=100,
-            on_change=None,  # Remove any existing on_change handler
+            value="",  # Explicitly set empty value
         )
 
     with col2:
@@ -144,13 +144,16 @@ def main():
 
     # Handle message sending (either through button click or Enter key)
     if (send_button or (user_input and user_input.strip() and "\n" not in user_input)) and user_input.strip():
+        # Store the message content before clearing
+        message_content = user_input.strip()
+        
+        # Clear the input by incrementing the key
+        st.session_state.user_input_key += 1
+        
         # 1. Display user message immediately: Append to conversation and update Firestore
-        user_message = {"role": "user", "content": user_input.strip()}
+        user_message = {"role": "user", "content": message_content}
         st.session_state.conversation.append(user_message)
         update_conversation_messages(st.session_state.user_id, [user_message])
-        
-        # Increment the key to force a new input box
-        st.session_state.user_input_key += 1
         
         st.experimental_rerun()  # Rerun to show the user message instantly
 
@@ -174,4 +177,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
