@@ -163,9 +163,9 @@ def main():
     if st.session_state.conversation and st.session_state.conversation[-1]["role"] == "user":
         # Show typing indicator while waiting for response.
         typing_placeholder.text("Tuco is thinking...")
-        
+        provider = os.getenv("LLM_PROVIDER")
         # Get response from LLM (simulate streaming by waiting and then updating)
-        response_text = get_llm_response(st.session_state.conversation[:-1], st.session_state.conversation[-1]["content"])
+        response_text = get_llm_response(st.session_state.conversation[:-1], st.session_state.conversation[-1]["content"], provider)
         
         # Clear typing indicator
         typing_placeholder.empty()
