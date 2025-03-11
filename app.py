@@ -8,6 +8,7 @@ import openai
 from anthropic import Anthropic
 import firebase_admin
 
+# deployment check after cleaning up repos
 # Load environment variables
 load_dotenv()
 
